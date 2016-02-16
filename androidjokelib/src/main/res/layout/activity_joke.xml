@@ -9,4 +9,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ninja.berbert.androidjokelib.JokeActivity">
 
+    <TextView
+        android:id="@+id/tv_joke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>
