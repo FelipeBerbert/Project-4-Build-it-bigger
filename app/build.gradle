@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+def PROJECT_ID = '"' + PROJECT_ID + '"' ?: '"Missing API Key"';
 
 android {
     compileSdkVersion 23
@@ -10,22 +11,39 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
     }
     buildTypes {
+        all {
+            buildConfigField 'String', 'PROJECT_ID', PROJECT_ID
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    productFlavors {
+        free {
+
+            applicationId "com.udacity.gradle.builditbigger.free"
+        }
+        paid {
+            applicationId "com.udacity.gradle.builditbigger.paid"
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     // Added for AdMob
-    compile project(':jokelib')
     compile project(':androidjokelib')
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.google.android.gms:play-services:8.3.0'
+    freeCompile 'com.google.android.gms:play-services:8.3.0'
     compile project(path: ':jokeBackend', configuration: 'android-endpoints')
-    compile project(':jokeBackend')
+    compile 'com.android.support:multidex:1.0.1'
+
 }
