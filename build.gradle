@@ -17,3 +17,26 @@ allprojects {
         jcenter()
     }
 }
+
+evaluationDependsOn ":jokeBackend"
+
+project(":jokeBackend"){
+    appengine{
+        daemon true // Thanks to JeremyAtUdacity on https://discussions.udacity.com/t/last-optional-step-how-to-start-an-external-module-task-from-the-root-build-gradle/24211/9
+    }               // for the help with this solution.
+}
+
+task stopBackend(dependsOn: ':jokeBackend:appengineStop') {
+    mustRunAfter tasks.getByPath(':app:connectedCheck')
+}
+
+task runTests (dependsOn: ":app:connectedCheck") {
+    tasks.getByPath(':app:connectedCheck').dependsOn ':startBackend'
+    finalizedBy ':stopBackend'
+}
+task startBackend(dependsOn: ":jokeBackend:appengineRun") {
+
+}
+
+
+

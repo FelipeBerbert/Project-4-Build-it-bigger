@@ -3,6 +3,7 @@ package com.udacity.gradle.builditbigger;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +82,7 @@ public class MainActivityFragment extends Fragment implements IJokeFetcher{
     public void fetchJoke(){
         pbLoading.setVisibility(View.VISIBLE);
         btJoke.setEnabled(false);
-        new JokeAsyncTask().execute(this);
+        new JokeAsyncTask().execute(new Pair<IJokeFetcher, Boolean>(this, false));
     }
 
 
